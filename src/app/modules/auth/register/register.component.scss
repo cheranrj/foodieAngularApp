@@ -1,0 +1,26 @@
+@import "reusable";
+
+:host {
+	height: 100%;
+}
+
+.sign-up-container {
+	// padding: 10px 10px;
+
+	.container {
+		@extend %container;
+
+		.sign-in-title {
+			@extend %title;
+		}
+
+		.btn-container {
+			margin: 0;
+
+			.action-btn {
+				@extend %action-btn;
+			}
+
+		}
+	}
+}

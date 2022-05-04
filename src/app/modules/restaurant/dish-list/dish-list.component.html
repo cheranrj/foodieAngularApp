@@ -1,0 +1,158 @@
+<div class="dish-list-container" fxFill>
+	<ng-container *ngIf="currentUser?.loginType?.key === 'restaurant'">
+		<div fxLayout="row" fxLayoutAlign="end center">
+			<div class="btn-container" fxLayout="column" fxLayoutAlign="center center" fxFlexAlign="end">
+				<button mat-raised-button #addDishAction matRipple class="action-btn"
+					(click)="addDishForm('addDish',{'actionElement': addDishAction})">
+					<mat-icon> fastfood</mat-icon>Add Dish
+				</button>
+			</div>
+		</div>
+	</ng-container>
+
+	<div class="dish-list">
+		<!-- trackBy: gfService.trackByID.bind({'key': 'id'}); -->
+		<div class="dish-category-list" fxLayout="row" fxFlex="1 1 25" fxLayoutAlign="start start">
+			<div fxLayout="column" fxFlex="1 1 100" fxLayoutGap="10px">
+				<ng-container *ngFor="let dishes of dishList;
+					 let i = index">
+					<span class="dish-type-title cursor-pointer" fxLayout="column" fxFlex="1 1 100"
+						[ngClass]="{'active':(dishes?.active)}" fxFill (click)="selectCategory(i)">
+						{{dishes?.dishType}}
+
+					</span>
+				</ng-container>
+
+			</div>
+
+		</div>
+		<div class="dish-list-view" fxLayout="column" fxFlex="1 1 75" fxLayoutAlign="space-between start"
+			fxLayoutGap="25px">
+			<ng-container *ngFor="let dishes of dishList;
+				 let i = index">
+				<span class="dish-category" [id]="dishes.contentID">{{dishes?.dishType}}</span>
+				<ng-container *ngFor="let dish of dishes.dishes; let dishIndex = index">
+					<ng-container *ngIf="dish?.dishImage">
+						<div class="dish-item" fxLayout="row" fxFlex="1 0 100px" fxFill>
+							<ng-container [ngTemplateOutlet]="dishItemTemplate" [ngTemplateOutletContext]="{dish:dish}">
+							</ng-container>
+						</div>
+					</ng-container>
+					<ng-container *ngIf="!dish?.dishImage">
+						<div class="dish-item" fxLayout="row" fxFlex="1 0 50px" fxFill>
+							<ng-container [ngTemplateOutlet]="dishItemTemplate" [ngTemplateOutletContext]="{dish:dish}">
+							</ng-container>
+						</div>
+					</ng-container>
+
+
+
+
+					<ng-template #dishItemTemplate let-dish="dish">
+						<ng-container *ngIf="dish?.dishImage">
+							<div class="dish-type image" fxLayout="row" fxFlex="1 1 20" fxLayoutAlign="center start">
+								<img [src]="dish?.dishImage" alt="" onerror="'../../../../assets/images/dummyimg1.png'">
+								<div class="dish-image">
+									<div class="dish-type" fxLayout="row" fxFlex="1 1 5" fxLayoutAlign="center start">
+										<ng-container [ngTemplateOutlet]="dishTypeTemplate" [ngTemplateOutletContext]="{dish:dish}">
+										</ng-container>
+									</div>
+
+								</div>
+							</div>
+						</ng-container>
+						<ng-container *ngIf="!dish?.dishImage">
+							<div class="dish-type" fxLayout="row" fxFlex="1 1 2" fxLayoutAlign="center start">
+								<ng-container [ngTemplateOutlet]="dishTypeTemplate" [ngTemplateOutletContext]="{dish:dish}">
+								</ng-container>
+
+							</div>
+						</ng-container>
+
+						<ng-template #dishTypeTemplate let-dish="dish">
+							<div class="dish-type-box" fxFlex="1 1 13px" [ngClass]="{'non-veg':(dish?.dishCategory === 'Non-veg'),
+							'veg':(dish?.dishCategory === 'Veg')}" fxLayout="row" fxLayoutAlign="center center">
+								<div class="symbol"></div>
+							</div>
+						</ng-template>
+
+						<div class="dish" fxLayout="row" fxFlex="1 1" fxLayoutAlign=" start">
+							<div fxLayout="column" fxFlex="1 1 ">
+								<p class="dish-title">{{ dish?.dishName }}</p>
+								<p class="dish-price-details" fxLayout="row" fxLayoutGap="10px">
+									<ng-container *ngIf="dish?.discount">
+										<span class="strike-amount">₹{{dish?.amount}} </span>
+										<span class="final-amount">₹{{dish?.finalAmount}}</span>
+										<span class="discount"> {{dish?.discount }}% OFF</span>
+									</ng-container>
+									<ng-container *ngIf="!dish?.discount">
+										<span class="final-amount">₹{{dish?.amount}} </span>
+									</ng-container>
+								</p>
+							</div>
+
+							<div fxFlex="1 1 157px">
+								<div class="btn-container" fxLayout="row" fxLayoutAlign="center center" fxFlexAlign="end"
+									fxLayoutGap="10px">
+									<ng-container *ngIf="currentUser?.loginType?.key === 'restaurant'">
+										<button fxLayout="row" fxLayoutAlign="center center" mat-raised-button #editDishBtn matRipple
+											class="edit-btn" (click)="addDishForm('editDish',{'data':dish,'index':i,'dishIndex':dishIndex,'actionElement':
+											editDishBtn})">
+											<mat-icon> edit</mat-icon>
+										</button>
+										<button fxLayout="row" fxLayoutAlign="center center" #deleteDishBtn mat-raised-button matRipple
+											(click)="alertPopup({'data':dish,'index':i, 'dishIndex':dishIndex,'actionElement':
+											deleteDishBtn})" class="trash-btn">
+											<mat-icon> delete</mat-icon>
+										</button>
+									</ng-container>
+									<ng-container *ngIf="currentUser?.loginType?.key === 'customer'">
+										<ng-container *ngIf="dish?.quantity === 0">
+											<button fxLayout="row" fxLayoutAlign="center center" mat-raised-button matRipple
+												class="add-dish-btn" (click)="selectQuantity('add',dish)">
+												Add <span>+</span>
+											</button>
+										</ng-container>
+										<ng-container *ngIf="dish?.quantity > 0">
+											<div class="dish-quantity-block" fxLayout="row" fxFlex="1 1 70px" fxLayoutAlign="center center">
+												<span class="delete cursor-pointer" fxLayout="row" fxFlex="30" fxLayoutAlign="center center"
+													(click)="selectQuantity('delete',dish)">
+													-
+												</span>
+												<span class="quantity" fxLayout="row" fxFlex="30"
+													fxLayoutAlign="center center">{{dish?.quantity}}</span>
+												<span class="add cursor-pointer" fxLayout="row" fxFlex="30" fxLayoutAlign="center center"
+													(click)="selectQuantity('add',dish)">
+													+
+												</span>
+											</div>
+										</ng-container>
+									</ng-container>
+								</div>
+							</div>
+						</div>
+					</ng-template>
+				</ng-container>
+
+			</ng-container>
+
+		</div>
+	</div>
+
+</div>
+<ng-container *ngIf="showCart">
+	<div class="cart-popup" fxLayout="row" fxFlex="1 1 100" fxLayoutAlign="center center">
+		<div class="cart-popup-block cursor-pointer" matRipple fxLayout="row" fxFlex="1 1 300px"
+			fxLayoutAlign="space-between center" (click)="orderDetail()">
+			<div fxLayout="column" fxLayoutAlign="center start">
+				<span class="cart-total">₹{{totalAmount}}</span>
+				<span class="cart-total total">Total</span>
+			</div>
+			<div>
+				<span class="cart-place-order" fxLayout="row" fxLayoutAlign="center center">Place Order
+					<mat-icon> arrow_right</mat-icon>
+				</span>
+			</div>
+		</div>
+	</div>
+</ng-container>

@@ -1,0 +1,107 @@
+<div class="sign-up-container" fxLayout="row" fxLayoutAlign="center center" fxFlex="1 1 100">
+	<ng-container *ngIf="screenType === 'signUpType'">
+		<div fxLayout="column" fxFill fxFlex="1 1 350px" fxLayoutAlign="center center">
+
+			<div class="container" fxLayout="column" fxFill fxFlex="1 1 300px">
+				<div class="sign-up-type" fxLayout="row wrap" fxLayoutAlign="space-around center" fxFill>
+					<ng-container *ngFor="let type of registerationTypes">
+						<div class="option-container">
+							<div class="option" (click)="setScreen(type)" fxLayout="column" fxFlex="1 1 100px"
+								fxLayoutAlign="center center">
+								<mat-icon color="primary">{{ type?.icon}}</mat-icon>
+								<span>{{ type?.value }}</span>
+							</div>
+
+						</div>
+					</ng-container>
+
+				</div>
+
+			</div>
+
+		</div>
+	</ng-container>
+
+	<ng-container *ngIf="screenType === 'signUpForm'">
+		<div fxLayout="column" fxFlex="1 1 500px" fxFlex.xs="1 1 100" fxLayoutAlign="center stretch">
+			<div class="container" fxLayout="column">
+				<div fxLayout="column" fxFlex="1 1 100%" fxLayoutAlign="start center" fxLayoutGap="20px">
+					<div fxLayout="row" fxLayoutAlign="start center" fxFill>
+						<h2 class="sign-in-title">Foodie Sign-up</h2>
+					</div>
+					<div fxFlex="1 1 100%" fxLayout="column" fxFill>
+						<form fxLayout="column" fxLayoutAlign="space-around stretch" fxFill [formGroup]="registerForm"
+							(ngSubmit)="submit()" class="example-form" novalidate>
+
+							<mat-form-field>
+								<mat-label>SignIn as</mat-label>
+								<mat-select name="loginType" formControlName="loginType">
+									<mat-option *ngFor="let type of registerationTypes" [value]="type.value">
+										{{type.key}}
+									</mat-option>
+								</mat-select>
+								<mat-error *ngIf="form?.loginType?.errors && form?.loginType?.touched"
+									[innerHtml]="gfService.validationMsg(form?.loginType)">
+								</mat-error>
+							</mat-form-field>
+
+							<mat-form-field class="example-full-width">
+								<mat-label>User Name</mat-label>
+								<input matInput type="text" placeholder="Type your Full name" name="userName" value=""
+									formControlName="userName">
+								<mat-error *ngIf="form?.userName?.errors && form?.userName?.touched"
+									[innerHtml]="gfService.validationMsg(form?.userName)">
+								</mat-error>
+							</mat-form-field>
+
+							<mat-form-field class="example-full-width">
+								<mat-label>Email-ID</mat-label>
+								<input matInput type="text" placeholder="Type Email-ID" name="emailID" value=""
+									formControlName="emailID" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
+								<mat-error *ngIf="form?.emailID?.errors && form?.emailID?.touched"
+									[innerHtml]="gfService.validationMsg(form?.emailID)">
+								</mat-error>
+
+							</mat-form-field>
+
+							<mat-form-field class="example-full-width">
+								<mat-label>Mobile no</mat-label>
+								<input matInput type="number" placeholder="Mobile no." name="mobileNumber" value=""
+									formControlName="mobileNumber">
+								<mat-error *ngIf="form?.mobileNumber?.errors && form?.mobileNumber?.touched"
+									[innerHtml]="gfService.validationMsg(form?.mobileNumber)">
+								</mat-error>
+							</mat-form-field>
+
+
+							<mat-form-field class="example-full-width">
+								<mat-label>Password</mat-label>
+								<input matInput type="password" placeholder="Password" value="" name="password"
+									formControlName="password">
+								<mat-error *ngIf="form?.password?.errors && form?.password?.touched"
+									[innerHtml]="gfService.validationMsg(form?.password)">
+								</mat-error>
+							</mat-form-field>
+
+							<mat-form-field class="example-full-width">
+								<mat-label>Confirm password</mat-label>
+								<input matInput type="password" placeholder="Confirm password" value="" name="confirmPassword"
+									formControlName="confirmPassword">
+								<mat-error *ngIf="form?.confirmPassword?.errors && form?.confirmPassword?.touched"
+									[innerHtml]="gfService.validationMsg(form?.confirmPassword)">
+								</mat-error>
+							</mat-form-field>
+
+							<div class="btn-container" fxLayout="column" fxLayoutAlign="center center">
+								<button [disabled]="submitDisable" mat-raised-button matRipple class="action-btn">Submit</button>
+							</div>
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</ng-container>
+
+</div>

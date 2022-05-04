@@ -1,0 +1,70 @@
+@import "reusable";
+
+:host {
+	height: 100%;
+}
+
+.outlet-container {
+	padding: 0 10px;
+
+
+
+	.container {
+		@extend %container;
+		border-radius: 0;
+		// overflow-y: scroll;
+		padding: 30px;
+
+		.btn-container {
+			margin: 0;
+
+			.action-btn {
+				@extend %action-btn;
+				border-radius: 20px;
+			}
+		}
+
+		.outlet-card-container {
+			// padding: 30px 0;
+
+			.outlet-card {
+				margin-top: 30px;
+				// padding: 10px;
+				box-shadow: 0 2px 4px 0 hsla(0, 0%, 90%, 0.5);
+
+				.outlet-image {
+					position: relative;
+
+					img {
+						object-fit: cover;
+						border-radius: 10px 10px 0 0;
+						position: absolute;
+					}
+				}
+
+				.outlet-details {
+					padding: 10px 0 10px 5px;
+
+					.outlet-header {
+
+						.outlet-title {
+							@extend %block-title;
+							font-size: 1.1rem;
+							// margin: 5px 0 !important;
+						}
+
+						mat-icon {
+							@extend %edit-icon;
+						}
+					}
+
+					.outlet-address {
+						@extend %block-secondary-text;
+						font-weight: 400;
+					}
+				}
+
+			}
+		}
+	}
+}

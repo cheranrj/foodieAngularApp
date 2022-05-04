@@ -1,0 +1,63 @@
+<div class="order-detail-container">
+	<div class="order-title">
+		<h2>Order Summary</h2>
+	</div>
+
+	<div class="order-list" fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="15px">
+		<ng-container *ngFor="let food of orderList;">
+			<div class="food-detail" fxLayout="row" fxLayoutAlign="space-between start">
+				<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="5px">
+
+					<div fxLayout="column">
+						<div class="dish-type-box" fxFlex="1 1 13px" [ngClass]="{'non-veg':(food?.dishCategory === 'Non-veg'),
+									'veg':(food?.dishCategory === 'Veg')}" fxLayout="row" fxLayoutAlign="center center">
+							<div class="symbol"></div>
+						</div>
+					</div>
+					<div fxLayout="column">
+						<div fxLayout="row">
+							<span class="food-title">{{ food?.quantity}} <small>X</small> {{ food?.dishName }}</span>
+						</div>
+						<div>
+							<span class="amount">₹{{ food?.finalAmount * food?.quantity }}</span>
+						</div>
+
+					</div>
+				</div>
+				<ng-container *ngIf="food?.quantity > 0">
+					<div class="dish-quantity-block" fxLayout="row" fxFlex="1 1 70px" fxLayoutAlign="center center">
+						<span class="delete cursor-pointer" fxLayout="row" fxFlex="30" fxLayoutAlign="center center"
+							(click)="selectQuantity('delete',food)">
+							-
+						</span>
+						<span class="quantity" fxLayout="row" fxFlex="30" fxLayoutAlign="center center">{{food?.quantity}}</span>
+						<span class="add cursor-pointer" fxLayout="row" fxFlex="30" fxLayoutAlign="center center"
+							(click)="selectQuantity('add',food)">
+							+
+						</span>
+					</div>
+				</ng-container>
+			</div>
+		</ng-container>
+	</div>
+
+	<div class="payment-block" fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="15px">
+
+		<div class="amount-section" fxLayout="row" fxLayoutAlign="space-between start">
+			<span class="amount-text">Total:</span>
+			<span class="amount">₹{{ totalAmount }}</span>
+		</div>
+
+		<div fxLayout="row" fxLayoutAlign="center center">
+			<div class="btn-container" fxLayout="column" fxLayoutAlign="center stretch" fxFlexAlign="end">
+				<button mat-raised-button [disabled]="submitDisable" #addDishAction matRipple class="action-btn"
+					(click)="submit()">
+					Place Order
+					<mat-icon> arrow_right</mat-icon>
+				</button>
+			</div>
+		</div>
+
+	</div>
+
+</div>

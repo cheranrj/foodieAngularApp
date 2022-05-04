@@ -1,0 +1,51 @@
+<!-- <mat-toolbar>
+	<button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<span>My App</span>
+	<span class="example-spacer"></span>
+	<button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+		<mat-icon>favorite</mat-icon>
+	</button>
+	<button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+		<mat-icon>share</mat-icon>
+	</button>
+</mat-toolbar> -->
+
+<div class="header-container">
+  <div
+    class="header-section"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    fxFlex="1 1"
+    fxFill
+  >
+    <div fxFlex="1 1 40" fxLayout="row">
+      <button
+        mat-icon-button
+        class="menu-burger"
+        aria-label="Example icon-button with menu icon"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="title">Foodie</span>
+      </div>
+    </div>
+    <div fxFlex="1 1 50px">
+      <div class="universal-profile cursor-pointer">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <img
+            [src]="'../../assets/images/man.png'"
+            (error)="('../../assets/images/man.png')"
+          />
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Edit Profile</button>
+          <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+        <!-- <mat-icon class="silver-icon" svgIcon="badge"></mat-icon> -->
+      </div>
+    </div>
+  </div>
+</div>

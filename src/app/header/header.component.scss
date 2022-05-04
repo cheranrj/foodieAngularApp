@@ -1,0 +1,39 @@
+@import "reusable";
+
+:host {
+	height: 100%;
+}
+
+.header-container {
+	padding: 10px 5px 10px 5px;
+	position: relative;
+	background-color: $background-one;
+
+	.header-section {
+		.menu-burger {
+			mat-icon {
+				font-size: 1.5rem;
+				// height: 10px;
+
+			}
+		}
+
+		.title {
+			color: $app-primary-one;
+			font-size: 1.3rem;
+			font-weight: 500;
+		}
+
+		.universal-profile {
+			position: relative;
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: fill;
+				border: 1px;
+				border-radius: 100%;
+			}
+		}
+	}
+}

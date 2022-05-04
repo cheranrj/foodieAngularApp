@@ -1,0 +1,180 @@
+@import "./mat-theme.scss";
+
+$background-one: var(--background-one);
+$background-two: var(--background-two);
+$primary: var(--primary);
+$app-primary-one: var(--app-primary-one);
+$app-primary-two: var(--app-primary-two);
+$secondary: var(--secondary);
+$error: var(--error);
+$success: var(--success);
+$warning: var(--warning);
+$border: var(--border);
+$secondary-info: var(--secondary-info);
+$secondary-grey: var(--secondary-grey);
+$border-secondary: var(--border-secondary);
+
+$white: #ffffff;
+
+%primary-font {
+	font-family: "Roboto", sans-serif !important;
+}
+
+%block-title {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.3;
+
+	&:hover {
+		color: $primary;
+		cursor: pointer;
+	}
+}
+
+%block-secondary {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.3em;
+	color: $secondary-info;
+}
+
+%block-secondary-text {
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 1.3em;
+	color: $secondary-info;
+}
+
+%title {
+	font-size: 1.3rem;
+	font-weight: 400;
+	line-height: 1.6;
+}
+
+%content {
+	@extend %block-secondary-text;
+	font-weight: 400;
+	font-size: 1rem;
+}
+
+
+%custom-mat-icon {
+	font-size: 1.5em;
+	width: 1em;
+	// height: 1em;
+	// line-height: 1em;
+	padding: 2px;
+
+	&::ng-deep {
+		svg {
+			width: 1em;
+			height: 1em;
+			font-size: 1em;
+		}
+	}
+}
+
+%container {
+	background: $white;
+	border-radius: 10px;
+	padding: 20px 20px;
+	box-shadow: 0 2px 4px 0 hsla(0, 0%, 90%, 0.5);
+
+	.btn-container {
+		margin-top: 15px;
+	}
+}
+
+%action-btn {
+	text-align: center;
+	color: $white;
+	font-size: 14px;
+	min-width: 80px;
+	transform: none;
+	height: 36px;
+	background-color: $app-primary-one;
+	font-weight: 500;
+	padding: 0 10px;
+
+	mat-icon {
+		@extend %custom-mat-icon;
+		// padding: 0;
+
+		&:first-child {
+			margin: 0 5px 0 -4px;
+		}
+
+		&:not(:first-child) {
+			margin-right: 5px;
+		}
+	}
+
+	&:hover {
+		// border-color: color($primary);
+		box-shadow: 0 0 3px 0px color($border);
+		transition: all 0.2s ease-in-out;
+	}
+
+	&:disabled {
+		box-shadow: none;
+		background-color: rgba(0, 0, 0, 0.12);
+		color: rgba(0, 0, 0, 0.3);
+		border: 1px rgba(0, 0, 0, 0.3) solid;
+	}
+}
+
+%cancel-btn {
+	text-align: center;
+	color: black;
+	font-size: 14px;
+	min-width: 80px;
+	transform: none;
+	height: 36px;
+	font-weight: 500;
+
+	&:not(:disabled):hover {
+		// color: $border;
+		transition: all 0.2s ease-in-out;
+	}
+
+	&:disabled {
+		box-shadow: none;
+		background-color: rgba(0, 0, 0, 0.12);
+		color: rgba(0, 0, 0, 0.3);
+	}
+}
+
+%custom-mat-icon {
+	font-size: 1.5em;
+	width: 1em;
+	height: 1em;
+	line-height: 1em;
+	padding: 2px;
+
+	&::ng-deep {
+		svg {
+			width: 1em;
+			height: 1em;
+			font-size: 1em;
+		}
+	}
+}
+
+%add-fab-btn {
+	background-color: $app-primary-one;
+}
+
+%remove-fab-btn {
+	background-color: $background-one;
+	color: $app-primary-one;
+}
+
+%edit-icon {
+	@extend %custom-mat-icon;
+	font-size: 19px;
+	color: $app-primary-one;
+	padding: 0px;
+	width: auto;
+	height: auto;
+	margin-right: 5px;
+}

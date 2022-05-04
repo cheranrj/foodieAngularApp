@@ -1,0 +1,159 @@
+<div
+  class="login-container"
+  fxLayout="column"
+  fxFill
+  fxLayoutAlign="center center"
+>
+  <div
+    class="sign-in-container"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxFlexAlign="end"
+  >
+    <a
+      mat-raised-button
+      matRipple
+      class="action-btn"
+      [routerLink]="['/auth/register']"
+      >Create Account</a
+    >
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center stretch" fxFlex="1 1 100">
+    <div
+      fxLayout="column"
+      fxFlex="1 1 400px"
+      fxFlex.xs="1 1 100"
+      fxLayoutAlign="center stretch"
+    >
+      <div class="container" fxLayout="column" fxFlex="1 1 350px">
+        <div fxLayout="column" fxFlex="1 1 100%" fxLayoutAlign="start center">
+          <div>
+            <h2 class="login-title">Foodie Login</h2>
+          </div>
+          <div fxFlex="1 1 100%" fxLayout="column" fxFill>
+            <form
+              fxLayout="column"
+              fxLayoutAlign="space-between stretch"
+              fxFill
+              #loginForm="ngForm"
+              (ngSubmit)="submit()"
+              class="example-form"
+              novalidate
+            >
+              <mat-form-field>
+                <mat-label>Login as</mat-label>
+                <mat-select
+                  name="loginType"
+                  [(ngModel)]="data.loginType"
+                  #loginType="ngModel"
+                  required
+                >
+                  <mat-option
+                    *ngFor="let type of loginTypes"
+                    [value]="type.value"
+                  >
+                    {{ type.key }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="loginType.errors && loginType.touched"
+                  [innerHtml]="gfService.validationMsg(loginType)"
+                >
+                </mat-error>
+              </mat-form-field>
+
+              <ng-container *ngIf="isEmail">
+                <mat-form-field class="example-full-width">
+                  <mat-label>UserID</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Type Email-ID"
+                    name="userID"
+                    value=""
+                    [(ngModel)]="data.userID"
+                    #userID="ngModel"
+                    pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="userID.errors && userID.touched"
+                    [innerHtml]="gfService.validationMsg(userID)"
+                  >
+                  </mat-error>
+                </mat-form-field>
+              </ng-container>
+
+              <ng-container *ngIf="!isEmail">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Mobile no</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Mobile no."
+                    name="mobileNumber"
+                    value=""
+                    [(ngModel)]="data.mobileNumber"
+                    #mobileNumber="ngModel"
+                    pattern="^[0-9]{10}$"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="mobileNumber.errors && mobileNumber.touched"
+                    [innerHtml]="gfService.validationMsg(mobileNumber)"
+                  >
+                  </mat-error>
+                </mat-form-field>
+              </ng-container>
+
+              <mat-form-field class="example-full-width">
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  placeholder="Password"
+                  value=""
+                  name="password"
+                  [(ngModel)]="data.password"
+                  #password="ngModel"
+                  required
+                />
+                <mat-error
+                  *ngIf="password.errors && password.touched"
+                  [innerHtml]="gfService.validationMsg(password)"
+                >
+                </mat-error>
+              </mat-form-field>
+
+              <div fxFlexAlign="start" (click)="toggleUserID()">
+                <ng-container *ngIf="!isEmail">
+                  <span class="signin-type-title">Login with Email-ID</span>
+                </ng-container>
+                <ng-container *ngIf="isEmail">
+                  <span class="signin-type-title"
+                    >Login with Mobile number</span
+                  >
+                </ng-container>
+              </div>
+
+              <div
+                class="btn-container"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+              >
+                <button
+                  [disabled]="submitDisable"
+                  mat-raised-button
+                  matRipple
+                  class="action-btn"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

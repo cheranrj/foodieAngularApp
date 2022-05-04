@@ -1,0 +1,9 @@
+{
+	"configuration": {
+		"API_URL": "http:localhost:8080",
+		"API_PREFIX": "/",
+		"alertDuration": 2000,
+		"setToken": true,
+		"sessionExpireTime": 172800000
+	}
+}

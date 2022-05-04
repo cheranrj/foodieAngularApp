@@ -1,0 +1,53 @@
+@import "reusable";
+
+:host {
+	height: 100%;
+}
+
+.form-container {
+
+
+
+	.example-form {
+
+		.image-container {
+			width: 150px;
+			height: 150px;
+
+			&.outline {
+				border: 2px dashed $primary;
+			}
+
+			.file-image {
+				display: inline;
+				margin: 0 auto .5rem auto;
+				width: 140px;
+				height: 140px;
+				object-fit: cover;
+
+				// &.hidden {
+				// 	display: none;
+				// }
+			}
+
+			.image-text {
+				cursor: pointer;
+			}
+		}
+	}
+
+
+
+	.btn-container {
+		margin: 0;
+
+		.action-btn {
+			@extend %action-btn;
+		}
+
+		.cancel-btn {
+			@extend %cancel-btn;
+		}
+	}
+
+}

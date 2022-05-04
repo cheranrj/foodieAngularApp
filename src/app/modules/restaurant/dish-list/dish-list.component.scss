@@ -1,0 +1,267 @@
+@import "reusable";
+
+:host {
+	height: 100%;
+}
+
+.dish-list-container {
+
+	.btn-container {
+		margin: 0;
+
+		.action-btn {
+			@extend %action-btn;
+			border-radius: 20px;
+			background-color: $background-one;
+			color: $app-primary-one;
+
+			&:hover {
+				color: $background-one;
+				background-color: $app-primary-one;
+			}
+		}
+
+		.edit-btn {
+			@extend %action-btn;
+			border-radius: 20px;
+			height: 25px;
+			min-width: 50px;
+			background-color: $background-one;
+			color: $app-primary-one;
+
+			&:hover {
+				color: $background-one;
+				background-color: $app-primary-one;
+			}
+
+			mat-icon {
+				margin: 0 !important;
+			}
+		}
+
+		.trash-btn {
+			@extend %action-btn;
+			border-radius: 20px;
+			height: 25px;
+			min-width: 50px;
+			background-color: $background-one;
+			color: $app-primary-one;
+			margin: 0;
+
+			&:hover {
+				color: $background-one;
+				background-color: $app-primary-one;
+			}
+
+			mat-icon {
+				margin: 0 !important;
+			}
+		}
+
+		.add-dish-btn {
+			@extend %action-btn;
+			height: 32px;
+			min-width: 70px;
+			background-color: #d3181d08;
+			color: $app-primary-one;
+			font-size: 1rem;
+			border: 1px solid #e7161ca8;
+
+			&:hover {
+				color: $background-one;
+				background-color: $app-primary-one;
+			}
+
+			span {
+				margin-left: 5px;
+			}
+		}
+
+		.dish-quantity-block {
+			background-color: $app-primary-one;
+			border-radius: 5px;
+			font-weight: 600;
+			border: 1px solid #e7161ca8;
+			font-size: 1rem;
+
+			span {
+				height: 30px;
+			}
+
+			.add,
+			.delete {
+				color: $background-one;
+				background-color: $app-primary-one;
+				font-size: 1rem;
+				// border-left: 1px solid $background-one;
+			}
+
+			.quantity {
+				background-color: $background-one;
+				color: $app-primary-one;
+				font-weight: 500;
+
+			}
+		}
+	}
+
+	.dish-list {
+		margin-top: 10px;
+
+		.dish-category-list {
+
+			.dish-type-title {
+				@extend %title;
+				line-height: 1.2;
+				color: $border;
+				padding: 5px;
+				font-size: 1.2rem;
+
+				&.active {
+					color: $app-primary-one;
+					border-right: 3px solid $app-primary-one;
+					background: linear-gradient(90deg, $background-one, $app-primary-two);
+					font-size: 1.3rem;
+				}
+
+				&:hover {
+					color: $app-primary-one;
+				}
+			}
+		}
+
+		.dish-list-view {
+			padding-left: 10px;
+			border-left: 2px solid $secondary-grey;
+
+			.dish-category {
+				@extend %title;
+				font-size: 1.5rem;
+				line-height: 1.2;
+				color: $border;
+			}
+
+			.dish-item {
+				.dish-type {
+
+					&.image {
+						position: relative;
+
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: cover;
+							border-radius: 5px;
+						}
+
+					}
+
+					.dish-image {
+						position: absolute;
+						right: 7px;
+
+					}
+
+					.dish-type-box {
+						position: absolute;
+						width: 13px;
+						height: 13px;
+						border-radius: 2px;
+						background: rgb(255, 255, 255);
+
+						.symbol {
+							width: 7px;
+							height: 7px;
+							border-radius: 50%;
+						}
+
+						&.non-veg {
+							border: 1px solid $error;
+
+							.symbol {
+								background: $error;
+							}
+						}
+
+						&.veg {
+							border: 1px solid $success;
+
+							.symbol {
+								background: $success;
+							}
+						}
+
+					}
+				}
+
+				.dish {
+					padding-left: 10px;
+
+					.dish-title {
+						@extend %title;
+						font-size: 1.2rem;
+						line-height: 1;
+						color: $border;
+					}
+
+					.dish-price-details {
+						@extend %content;
+						line-height: 1;
+						padding-top: 10px;
+
+						// font-size: 0.9rem;
+
+						.strike-amount {
+							text-decoration: line-through;
+						}
+
+						.final-amount {
+							color: $border;
+						}
+
+						.discount {
+							color: $app-primary-one;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+
+.cart-popup {
+	position: fixed;
+	bottom: 1px;
+	z-index: 100;
+	width: 100%;
+
+	.cart-popup-block {
+		border-radius: 6px 6px 0 0;
+		background-color: $app-primary-one;
+		height: 45px;
+		padding: 0 10px;
+
+		.cart-total {
+			@extend %content;
+			color: $background-one;
+			font-weight: 500;
+
+			&.total {
+				font-size: 0.7rem;
+			}
+		}
+
+		.cart-place-order {
+			@extend %content;
+			color: $background-one;
+			font-weight: 500;
+
+			mat-icon {
+				color: $background-one;
+
+			}
+		}
+
+	}
+}

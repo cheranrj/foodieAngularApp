@@ -1,0 +1,84 @@
+<div class="outlet-detail-container">
+
+	<div class="container" fxLayout="column" fxFlex="1 1 90" fxFill>
+		<div class="outlet-image-container" fxLayout="row" fxFlex="1 1 100" fxLayoutGap="10px">
+			<ng-container *ngFor="let img of outletDetail?.outletImage;let first = first;">
+				<ng-container *ngIf="first">
+					<div class="primary-outlet-image" fxFlex="1 1 60">
+						<img class="cursor-pointer" [src]="img | safeDom : 'url'" alt="">
+					</div>
+				</ng-container>
+			</ng-container>
+
+			<ng-container *ngIf="outletDetail?.outletImage?.length > 1">
+				<div class="secondary-outlet-image" fxLayout="row wrap" fxFlex="1 1 40">
+					<ng-container *ngFor="let img of outletDetail?.outletImage;let first = first;let index=index;">
+						<ng-container *ngIf="!first && index<2">
+							<img class="cursor-pointer" [src]="img | safeDom : 'url'" alt="">
+						</ng-container>
+					</ng-container>
+					<div class="upload-image" fxLayoutAlign="center center">
+						<div class="image-icon" fxLayout="column" fxFlex="1 1 35px" fxLayoutAlign="center center">
+							<mat-icon svgIcon="image_collection"></mat-icon>
+						</div>
+						<img class="cursor-pointer" src="../../../../assets/images/food_dummy.webp" alt="">
+					</div>
+				</div>
+			</ng-container>
+
+			<ng-container *ngIf="outletDetail?.outletImage?.length === 1">
+				<div class="secondary-no-outlet-image" fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="1 1 30">
+					<div class="image-icon" fxLayout="column" fxFlex="1 1 35px" fxLayoutAlign="center center">
+						<mat-icon svgIcon="image_collection"></mat-icon>
+					</div>
+					<img class="cursor-pointer" src="../../../../assets/images/food_dummy.webp" alt="">
+				</div>
+
+			</ng-container>
+
+
+		</div>
+
+		<div class="outlet-detail" fxLayout="column" fxFlex="1 1 100" fxFill>
+			<section class="outlet-info" fxLayout="column" fxFlex="0 1 100px">
+				<h2 class="outlet-title">{{outletDetail?.outletName}}</h2>
+				<p class="outlet-speciality">{{outletDetail?.outletBio}}</p>
+			</section>
+
+			<div class="outlet-section" fxLayout="column" fxFlex="1 1">
+				<!-- [ngClass]="{'responsive-tab': detectDevice?.resolutionState$?.value?.deviceType === 'mobile'}" -->
+				<mat-tab-group class="custom-tab" [selectedIndex]="tabIndex" (selectedIndexChange)="tabChange($event)" #tab
+					mat-align-tabs="start">
+					<mat-tab [label]="'overview'">
+						<ng-container *ngIf="tabIndex === 0">
+
+						</ng-container>
+						<div class="outlet-overview">
+
+							<section>
+								<h2 class="overview-title">About this place</h2>
+								<p class="overview-content">People Say This Place Is Known For
+									Fresh Food, Good Quality, Value for Money, Packaging, Taste</p>
+							</section>
+
+						</div>
+					</mat-tab>
+					<mat-tab [label]="'dish'">
+						<ng-container *ngIf="tabIndex === 1">
+							<app-dish-list></app-dish-list>
+						</ng-container>
+					</mat-tab>
+					<mat-tab [label]="'photos'">
+						<ng-container *ngIf="tabIndex === 2">
+							Content 3
+						</ng-container>
+					</mat-tab>
+				</mat-tab-group>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

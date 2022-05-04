@@ -1,0 +1,30 @@
+<div class="orders-container">
+
+	<div class="container" fxLayout="column" fxFlex="1 1 90" fxFill>
+		<div class="orders-block" fxLayout="column" fxFlex="1 1 100" fxFill>
+			<!-- <section class="outlet-info" fxLayout="column" fxLayoutAlign="center start" fxFlex="0 1 100px">
+				<h2 class="outlet-title">{{outletDetail?.outletName}}</h2>
+			</section> -->
+
+			<div class="order-section" fxLayout="column" fxFlex="1 1 100">
+				<!-- [ngClass]="{'responsive-tab': detectDevice?.resolutionState$?.value?.deviceType === 'mobile'}" -->
+				<!-- <mat-tab-group class="custom-tab" [selectedIndex]="tabIndex" (selectedIndexChange)="tabChange($event)" #tab
+					mat-align-tabs="center">
+					<mat-tab [label]="'Order List'">
+						<ng-container *ngIf="tabIndex === 0"> -->
+				<app-order-list></app-order-list>
+				<!-- </ng-container>
+					</mat-tab>
+					<mat-tab [label]="'Past Orders'">
+						<ng-container *ngIf="tabIndex === 1">
+							<app-order-dispatch-list></app-order-dispatch-list>
+						</ng-container>
+					</mat-tab>
+				</mat-tab-group> -->
+
+			</div>
+
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<div class="outlet-container" fxLayout="row" fxFill fxLayoutAlign="center center">
+
+	<!-- <div fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 600px"> -->
+	<div fxLayout="column" fxFlex="1 1 80" fxFlex.xs="1 1 100" fxLayoutAlign="center stretch" fxFill>
+		<div class="container" fxLayout="column" fxFlex="auto" fxFill>
+			<div fxLayout="column" fxFlex="1 1 100%" fxLayoutAlign="start center" fxFill>
+				<ng-container *ngIf="currentUser?.loginType?.key === 'restaurant'">
+					<div class="btn-container" fxLayout="column" fxLayoutAlign="center center" fxFlexAlign="end">
+						<button mat-raised-button #addOutletAction matRipple class="action-btn"
+							(click)="addOutletForm('addOutlet', {'actionElement': addOutletAction})">
+							<mat-icon> fastfood</mat-icon>Add outlet
+						</button>
+					</div>
+				</ng-container>
+				<div fxLayout="row" fxFill>
+					<div class="outlet-card-container" fxLayout="row wrap" fxLayoutAlign="space-between center">
+						<ng-container *ngFor="let outlet of outletList; let i = index;">
+							<div class="outlet-card" fxLayout="column" fxFlex="1 1 30%">
+								<div class="outlet-image cursor-pointer" (click)="outLetDetail(outlet)" fxLayout="column"
+									fxFlex="1 1 180px">
+									<img [src]="outlet?.imageSrc | safeDom : 'url'" (error)="'../../../../assets/images/dummyimg1.png'"
+										fxFill>
+								</div>
+								<div class="outlet-details">
+									<div class="outlet-header cursor-pointer" fxLayout="row" fxLayoutAlign="space-between center">
+										<p class="outlet-title" (click)="outLetDetail(outlet)">{{ outlet?.title }}</p>
+										<ng-container *ngIf="currentUser?.loginType?.key === 'restaurant'">
+											<mat-icon (click)="addOutletForm('editOutlet', {data:outlet, index: i})">edit</mat-icon>
+										</ng-container>
+									</div>
+									<ng-container *ngFor="let info of outlet?.shortInfo">
+										<p class="outlet-address">{{ info }}</p>
+									</ng-container>
+								</div>
+							</div>
+						</ng-container>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- </div> -->
+
+</div>

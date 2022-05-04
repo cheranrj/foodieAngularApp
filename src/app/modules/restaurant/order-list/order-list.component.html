@@ -1,0 +1,180 @@
+<div class="order-list-container" fxLayout="column" fxFill fxLayoutGap="40px">
+
+	<div class="filter-chip-container" fxLayout="row" fxFlex="1 1" fxLayoutGap="10px">
+		<ng-container *ngFor="let filter of filterData; let i = index;">
+			<div class="filter-chip" fxLayout="row" (click)="getOrderList(filter)" fxLayoutAlign="center center"
+				[ngClass]="{'selected': filter?.selected}">
+				{{filter.value}}&nbsp;
+				<ng-container *ngIf="filter?.count !== 0">
+					<span class="count" fxLayout="row" fxLayoutAlign="center center">{{filter?.count}}</span>
+				</ng-container>
+			</div>
+		</ng-container>
+	</div>
+
+	<div class="order-list-block" fxLayout="column" fxLayoutGap="20px">
+		<ng-container *ngFor="let data of orderList; let i = index;">
+			<div class="order-list-item" fxLayout="row" fxLayoutGap="15px" fxFlex="1 1 auto">
+				<div class="order-section" fxLayout="column" fxFlex="1 1 30">
+					<div class="order-detail">
+						<p class="order-id"> ID: {{ data?.orderUniqueID }}</p>
+						<div class="customer-info">
+							<p>{{ data?.customerDetails?.name }}</p>
+							<p>{{ data?.customerDetails?.phoneNumber }}</p>
+						</div>
+					</div>
+					<mat-divider></mat-divider>
+
+					<div class="status" fxLayout="column" fxLayoutGap="5px">
+						<ng-container *ngFor="let statusData of data?.statusList;">
+							<ng-container *ngIf="![null,undefined,'','ordered','cancelled'].includes(statusData?.status?.key)">
+								<div class="status-update" fxLayout="row" fxLayoutAlign="space-between center">
+									<span class="status-text" fxLayout="row" fxLayoutAlign="center center">
+										<mat-icon>check_circle</mat-icon>
+										{{ statusData?.status?.caption }}
+									</span>
+									<span class="status-updated-time">{{ statusData?.updatedAt }}</span>
+								</div>
+							</ng-container>
+							<ng-container *ngIf="['cancelled'].includes(statusData?.status?.key)">
+								<div class="status-update cancel" fxLayout="row" fxLayoutAlign="start center">
+									<span class="status-text" fxLayout="row" fxLayoutAlign="center center">
+										<mat-icon>cancel</mat-icon>
+										{{ statusData?.status?.caption }}
+									</span>
+								</div>
+							</ng-container>
+						</ng-container>
+					</div>
+				</div>
+				<div class="food-detail-section" fxLayout="column" fxFlex="1 1 40" fxLayoutGap="15px">
+					<div fxLayout="column" fxLayoutGap="15px">
+						<ng-container *ngFor="let food of data?.foodDetails;">
+							<div class="food-detail" fxLayout="row" fxLayoutAlign="space-between center">
+								<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+									<div class="dish-type-box" fxFlex="1 1 13px" [ngClass]="{'non-veg':(food?.dishCategory === 'Non-veg'),
+								'veg':(food?.dishCategory === 'Veg')}" fxLayout="row" fxLayoutAlign="center center">
+										<div class="symbol"></div>
+									</div>
+									<span class="food-title">{{ food?.quantity}} <small>X</small> {{ food?.foodName }}</span>
+								</div>
+								<span class="amount">₹{{ food?.amount }}</span>
+							</div>
+						</ng-container>
+					</div>
+					<div fxLayout="column" fxLayoutGap="15px">
+						<mat-divider></mat-divider>
+						<div fxLayout="row" fxLayoutAlign="space-between center">
+							<p class="payment-status" [ngClass]="{'paid': (data?.paymentStatus?.key === 'paid'),
+						'not-paid': (data?.paymentStatus?.key === 'notPaid'), 'refund-init': (data?.paymentStatus?.key === 'refundInitiated'),
+					'refund': (data?.paymentStatus?.key === 'refund')}">Payment:
+								<span>{{ data?.paymentStatus?.caption }}</span></p>
+							<p class="total-amount">Total Bill: <span>₹{{ data?.totalAmount }}</span></p>
+						</div>
+
+						<ng-container *ngIf="![null,undefined,'','cancelled','outForDelivery','delivered'].includes(data?.orderStatus?.key) &&
+							currentUser?.loginType?.key === 'restaurant'">
+							<div class="btn-container" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="10px">
+								<button [disabled]="data?.disabled" mat-raised-button matRipple class="action-btn" matRipple>
+									<ng-container *ngIf="data?.orderStatus?.key === 'ordered'" (click)="updateOrder(data)">
+										Accept order
+									</ng-container>
+									<ng-container *ngIf="data?.orderStatus?.key === 'placed'">
+										Order ready for delivery
+									</ng-container>
+									<ng-container *ngIf="data?.orderStatus?.key === 'ready'">
+										Order Out for delivery
+									</ng-container>
+
+								</button>
+							</div>
+						</ng-container>
+
+						<ng-container *ngIf="![null,undefined,'','cancelled','outForDelivery','delivered'].includes(data?.orderStatus?.key) &&
+							currentUser?.loginType?.key === 'delivery'">
+							<div class="btn-container" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="10px">
+								<button [disabled]="data?.disabled" mat-raised-button matRipple class="action-btn" matRipple>
+									<ng-container *ngIf="data?.orderStatus?.key === 'ordered'" (click)="updateOrder(data)">
+										Accept order
+									</ng-container>
+
+									<ng-container *ngIf="data?.orderStatus?.key === 'ready'">
+										Ready to pickup
+									</ng-container>
+									<ng-container *ngIf="data?.orderStatus?.key === 'outForDelivery'">
+										Delivered
+									</ng-container>
+
+								</button>
+								<ng-container *ngIf="!['delivered']">
+									<button [disabled]="data?.disabled" mat-raised-button matRipple class="action-btn" matRipple
+										(click)="updateOrder(data)">
+										Cancel Delivery
+									</button>
+								</ng-container>
+							</div>
+							<div>
+								<ng-container *ngIf="data?.orderStatus?.key === 'placed'">
+									Order is preparing...
+								</ng-container>
+							</div>
+						</ng-container>
+					</div>
+
+				</div>
+
+				<div class="delivery-details-section" fxLayout="column" fxFlex="1 1 30" fxLayoutGap="10px">
+					<ng-container *ngIf="currentUser?.loginType?.key !== 'delivery'">
+						<p class=" delivery-title">
+							Rider details
+						</p>
+						<ng-container *ngIf="['ordered'].includes(data?.orderStatus?.key)">
+							<div class="delivery-block">
+								<h3>Searching nearby riders</h3>
+								<p class="delivery-info">We will shortly assign a rider to pickup the order.</p>
+							</div>
+						</ng-container>
+						<ng-container
+							*ngIf="['placed','ready','outForDelivery'].includes(data?.orderStatus?.key) && data?.riderDetails?.name">
+							<div class="delivery-block">
+								<h3>On Delivery</h3>
+								<p class="delivery-info">{{ data?.riderDetails?.name }} will be delivering the order.</p>
+							</div>
+						</ng-container>
+						<ng-container *ngIf="['delivered'].includes(data?.orderStatus?.key) && data?.riderDetails?.name">
+							<div class="delivery-block">
+								<p>{{ data?.riderDetails?.name }} delivered the order.</p>
+							</div>
+						</ng-container>
+					</ng-container>
+
+					<ng-container *ngIf="['placed','ready','outForDelivery','delivered'].includes(data?.orderStatus?.key) &&
+						data?.customerDetails?.address">
+						<div class="address">
+							<p class="address-title">Delivery address</p>
+							<p class="address-info">{{ data?.customerDetails?.address }}</p>
+						</div>
+
+					</ng-container>
+
+					<ng-container *ngIf="['cancelled'].includes(data?.orderStatus?.key) &&
+						data?.customerDetails?.address">
+						<div>
+							<p>No delivery</p>
+						</div>
+
+					</ng-container>
+
+
+				</div>
+			</div>
+		</ng-container>
+
+	</div>
+
+	<div fxLayout="row" fxFlex="1 1" fxLayoutAlign="center center">
+		<mat-paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+			(page)="paginationInfo($event)" #pagination>
+		</mat-paginator>
+	</div>
+</div>

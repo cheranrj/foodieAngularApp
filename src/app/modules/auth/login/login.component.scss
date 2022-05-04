@@ -1,0 +1,38 @@
+@import "reusable";
+
+:host {
+	height: 100%;
+}
+
+.login-container {
+	padding: 10px 10px;
+
+	.sign-in-container {
+		.action-btn {
+			@extend %action-btn;
+			border-radius: 20px;
+
+		}
+	}
+
+	.container {
+		@extend %container;
+
+		.login-title {
+			@extend %title;
+		}
+
+		.signin-type-title {
+			@extend %block-title;
+			font-size: 0.9rem;
+		}
+
+		.btn-container {
+			margin: 0;
+
+			.action-btn {
+				@extend %action-btn;
+			}
+		}
+	}
+}

@@ -1,0 +1,147 @@
+@import "reusable";
+
+:host {
+	height: 100%;
+}
+
+.outlet-detail-container {
+	// padding: 10px 10px;
+
+	.container {
+		@extend %container;
+		border-radius: 0;
+		padding: 0;
+		margin: 0 auto;
+
+		.outlet-image-container {
+			padding: 20px 0;
+			height: 20rem;
+			// position: sticky;
+			// top: 0px;
+
+			.primary-outlet-image,
+			.secondary-no-outlet-image {
+				position: relative;
+				overflow: hidden;
+				border-radius: 3px;
+
+				.image-icon {
+					position: absolute;
+
+					mat-icon {
+						color: $white;
+					}
+				}
+
+				img {
+					object-fit: cover;
+					height: 100%;
+					width: 100%;
+					filter: brightness(0.95);
+					transition: transform 0.4s ease-in-out 0s, opacity 1.63s ease 0s,
+						filter 0.4s ease 0s;
+
+					&:hover {
+						transform: scale(1.05);
+						filter: brightness(1.05);
+					}
+				}
+			}
+
+			.secondary-outlet-image {
+				overflow: hidden;
+				border-radius: 3px;
+
+				>img {
+					height: 140px;
+					width: 100%;
+					margin-bottom: 10px;
+					object-fit: cover;
+					filter: brightness(0.95);
+					transition: transform 0.4s ease-in-out 0s,
+						opacity 1.63s ease 0s,
+						filter 0.4s ease 0s;
+
+					&:hover {
+						transform: scale(1.05);
+						filter: brightness(1.05);
+					}
+				}
+
+				.upload-image {
+					width: 100%;
+					position: relative;
+					border-radius: 3px;
+
+					.image-icon {
+						position: absolute;
+						// width: 4rem;
+						// height: 4rem;
+						border-radius: 50%;
+						margin: 0px auto;
+						background-color: rgba(79, 79, 79, 0.6);
+						height: 35px;
+
+						mat-icon {
+							color: $white;
+							height: 25px;
+							width: 25px;
+						}
+					}
+
+					img {
+						height: 140px;
+						width: 100%;
+						margin-bottom: 10px;
+						object-fit: cover;
+					}
+				}
+			}
+		}
+
+		.outlet-detail {
+
+			.outlet-info {
+				margin-left: 5px !important;
+				// position: sticky;
+				// top: 320px;
+
+				.outlet-title {
+					@extend %block-title;
+					font-size: 1.4rem;
+					// font-weight: 400;
+					line-height: 1.5;
+				}
+
+				.outlet-speciality {
+					@extend %block-secondary-text;
+					font-weight: 400;
+					font-size: 1.1rem;
+				}
+			}
+
+			.outlet-section {
+				.outlet-overview {
+					.overview-title {
+						@extend %title;
+					}
+
+					.overview-content {
+						@extend %content;
+					}
+				}
+			}
+
+		}
+
+		// .btn-container {
+		// 	margin: 0;
+
+		// 	.action-btn {
+		// 		@extend %action-btn;
+		// 		border-radius: 20px;
+		// 	}
+		// }
+
+	}
+}

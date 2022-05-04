@@ -1,0 +1,154 @@
+<div fxLayout="column" class="form-container">
+	<div fxLayout="row" fxLayoutAlign="center center" fxFill>
+		<h2 class="form-title">{{title}}</h2>
+	</div>
+	<div fxFlex="1 1 100%" fxLayout="column" fxFill>
+		<ng-container *ngIf="action === 'addOutlet' || action === 'editOutlet'">
+
+			<form fxLayout="column" fxLayoutAlign="space-around stretch" fxFill [formGroup]="outLetForm" (ngSubmit)="submit()"
+				class="example-form" novalidate>
+
+				<mat-form-field class="example-full-width">
+					<mat-label>Outlet Name</mat-label>
+					<input matInput type="text" placeholder="Type outlet name" name="outletName" value=""
+						formControlName="outletName">
+					<mat-error *ngIf="form?.outletName?.errors && form?.outletName?.touched"
+						[innerHtml]="gfService.validationMsg(form?.outletName)">
+					</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="example-full-width">
+					<mat-label>Description</mat-label>
+					<textarea matInput type="text" placeholder="About outlet.." name="description" value=""
+						formControlName="description"></textarea>
+					<mat-error *ngIf="form?.description?.errors && form?.description?.touched"
+						[innerHtml]="gfService.validationMsg(form?.description)">
+					</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="example-full-width">
+					<mat-label>Email-ID</mat-label>
+					<input matInput type="text" placeholder="Type Email-ID" name="emailID" value="" formControlName="emailID"
+						pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
+					<mat-error *ngIf="form?.emailID?.errors && form?.emailID?.touched"
+						[innerHtml]="gfService.validationMsg(form?.emailID)">
+					</mat-error>
+				</mat-form-field>
+
+				<ng-container *ngFor="let phoneNumberCtrl of t.controls; let i = index">
+					<div [formGroup]="phoneNumberCtrl" fxLayout="row" fxLayoutAlign="space-between center">
+						<div fxFlex="90">
+							<mat-form-field class="example-full-width">
+								<mat-label>Phone no.</mat-label>
+								<input matInput type="text" placeholder="Phone no." name="phoneNumber" value=""
+									formControlName="phoneNumber">
+								<mat-error
+									*ngIf="phoneNumberCtrl?.controls?.phoneNumber?.errors && phoneNumberCtrl?.controls?.phoneNumber?.touched"
+									[innerHtml]="gfService.validationMsg(phoneNumberCtrl?.controls?.phoneNumber)">
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div fxFlexAlign="start">
+							<ng-container *ngIf="i === 0">
+								<button type="button" mat-mini-fab class="add-fab-btn" (click)="changeFields('add')">
+									<mat-icon>add</mat-icon>
+								</button>
+							</ng-container>
+							<ng-container *ngIf="i !== 0">
+								<button type="button" mat-mini-fab class="remove-fab-btn" (click)="changeFields('remove', i)">
+									<mat-icon>remove</mat-icon>
+								</button>
+							</ng-container>
+						</div>
+					</div>
+				</ng-container>
+
+				<mat-form-field class="example-full-width">
+					<mat-label>Address</mat-label>
+					<input matInput type="text" placeholder="Type address" name="address" value="" formControlName="address">
+					<mat-error *ngIf="form?.address?.errors && form?.address?.touched"
+						[innerHtml]="gfService.validationMsg(form?.address)">
+					</mat-error>
+				</mat-form-field>
+
+				<mat-form-field>
+					<mat-label>Country</mat-label>
+					<mat-select name="country" formControlName="country">
+						<mat-option *ngFor="let country of countryList" [value]="country.value">
+							{{country.key}}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="form?.country?.errors && form?.country?.touched"
+						[innerHtml]="gfService.validationMsg(form?.country)">
+					</mat-error>
+				</mat-form-field>
+
+				<mat-form-field>
+					<mat-label>State</mat-label>
+					<mat-select name="state" formControlName="state">
+						<mat-option *ngFor="let state of stateList" [value]="state.value">
+							{{state.key}}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="form?.state?.errors && form?.state?.touched"
+						[innerHtml]="gfService.validationMsg(form?.state)">
+					</mat-error>
+				</mat-form-field>
+
+				<mat-form-field>
+					<mat-label>City</mat-label>
+					<mat-select name="city" formControlName="city">
+						<mat-option *ngFor="let city of cityList" [value]="city.value">
+							{{city.key}}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="form?.city?.errors && form?.city?.touched"
+						[innerHtml]="gfService.validationMsg(form?.city)">
+					</mat-error>
+				</mat-form-field>
+
+				<mat-form-field class="example-full-width">
+					<mat-label>Pin code</mat-label>
+					<input matInput type="number" placeholder="Pin code" name="pinCode" value="" formControlName="pinCode">
+					<mat-error *ngIf="form?.pinCode?.errors && form?.pinCode?.touched"
+						[innerHtml]="gfService.validationMsg(form?.pinCode)">
+					</mat-error>
+				</mat-form-field>
+
+				<div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+					<div class="image-container" [ngClass]="{outline: (!form?.outletImage?.value)}" fxLayout="column"
+						fxLayoutAlign="center center">
+						<ng-container *ngIf="form?.outletImage?.value">
+							<img class="file-image" [src]="form?.outletImage?.value"
+								onerror="'../../../../assets/images/dummyimg1.png'">
+						</ng-container>
+						<ng-container *ngIf="!form?.outletImage?.value">
+							<p class="image-text" fxLayout="column" fxLayoutAlign="center center" fxFill (click)="triggerFile(file)">
+								Choose Image</p>
+						</ng-container>
+					</div>
+					<span>{{fileName}}</span>
+					<mat-error *ngIf="form?.outletImage?.errors && form?.outletImage?.touched"
+						[innerHtml]="gfService.validationMsg(form?.outletImage)">
+					</mat-error>
+					<input #file type="file" accept="image/*" hidden (change)="uploadFile($event)" />
+					<button type="button" (click)="triggerFile(file)" [disabled]="submitDisable" mat-raised-button
+						color="primary">Upload</button>
+
+				</div>
+
+
+				<!-- <div fxLayout="column" fxLayoutAlign="start stretch"> -->
+				<div class="btn-container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+					<button [disabled]="submitDisable" mat-raised-button matRipple class="action-btn" matRipple>Submit</button>
+					<button [disabled]="submitDisable" (click)="popupRef.close('cancel')" mat-raised-button matRipple
+						class="cancel-btn" type="button">Cancel</button>
+				</div>
+
+				<!-- </div> -->
+			</form>
+
+		</ng-container>
+	</div>
+
+</div>
